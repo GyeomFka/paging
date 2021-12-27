@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.zerobase.paging.domain.Posts;
 import org.zerobase.paging.pageable.Paging;
+import org.zerobase.paging.service.PagingService;
 import org.zerobase.paging.service.PostService;
 
 import java.util.List;
@@ -16,10 +17,12 @@ import java.util.Optional;
 public class PostController {
 
     private final PostService listService;
+    private final PagingService pagingService;
 
     @Autowired
-    public PostController(PostService listService) {
+    public PostController(PostService listService, PagingService pagingService) {
         this.listService = listService;
+        this.pagingService = pagingService;
     }
 
     @GetMapping("/")
@@ -31,6 +34,7 @@ public class PostController {
     //http://localhost:8080/postList?page=page
     @GetMapping("/postList")
     public String listPage(Model model, @RequestParam("page") Optional<Integer> page) {
+
         int nowPage = page.orElse(1);
         System.out.println("nowPage = " + nowPage);
 

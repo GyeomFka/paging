@@ -1,19 +1,19 @@
 package org.zerobase.paging.pageable;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.zerobase.paging.repository.PostRepository;
 
 public class Paging {
 
     public static final int NOW_PAGE_LIST_COUNT = 10;
+    public static final int NOW_VIEW_NAVIGATION_PAGE = 10;
 
-    private int nowPage; // 1,2,3 현재 페이징
-    private int totalPage; //page블록의 개수
-    private int pageSize = NOW_PAGE_LIST_COUNT;
-    private int totalArticle = PostRepository.getTotalCount();
-    private int startRow;
-    private int endRow;
+    private int nowPage; // 현재 페이지 ex)1page, 2page
+    private int viewNavPage = NOW_VIEW_NAVIGATION_PAGE;  //페이지 네비게이션 보주는 수
+    private int pageSize = NOW_PAGE_LIST_COUNT; //한 페이지에서 보여 줄 게시물 수
+    private int totalNavPage; //page블록의 개수
+    private int totalArticle = PostRepository.getTotalCount(); //전체 게시글 수
+    private int startRow; //각 페이지 첫 시작 게시글
+    private int endRow; //각 페이지 마지막 게시글
 
     public Paging(int nowPage) {
         validateNowPage(nowPage);
@@ -32,9 +32,9 @@ public class Paging {
 
     public void setTotalPage() { //끝자리의 몇개인지도 구해야함.
         if(totalArticle % pageSize > 0) {
-            this.totalPage = (totalArticle / pageSize) + 1;
+            this.totalNavPage = (totalArticle / pageSize) + 1;
         } else {
-            this.totalPage = totalArticle / pageSize;
+            this.totalNavPage = totalArticle / pageSize;
         }
     }
 
@@ -44,7 +44,7 @@ public class Paging {
     }
 
     public void setEndRow() {
-        if(totalArticle % pageSize > 0 && nowPage == totalPage) {
+        if(totalArticle % pageSize > 0 && nowPage == totalNavPage) {
             this.endRow = totalArticle;
         } else {
             this.endRow = nowPage * pageSize;
@@ -56,7 +56,7 @@ public class Paging {
     }
 
     public int getTotalPage() {
-        return totalPage;
+        return totalNavPage;
     }
 
     public int getPageSize() {
@@ -79,7 +79,7 @@ public class Paging {
     public String toString() {
         return "Paging{" +
                 "nowPage=" + nowPage +
-                ", totalPage=" + totalPage +
+                ", totalNavPage=" + totalNavPage +
                 ", pageSize=" + pageSize +
                 ", totalArticle=" + totalArticle +
                 ", startRow=" + startRow +
