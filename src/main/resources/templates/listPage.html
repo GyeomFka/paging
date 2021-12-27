@@ -20,7 +20,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="postList : ${postList}">
+        <tr th:each="postList : ${postList}" style="text-align: center;">
             <td th:text="${postList.id}"></td>
             <td th:text="${postList.title}"></td>
             <td th:text="${postList.createTime}"></td>
@@ -29,7 +29,7 @@
     </table>
 </div> <!--container-->
 
-<nav style="text-aling: center;">
+<nav style="text-align: center;">
     <p th:text="${pagingConfigure}"></p>
     <ul>
         <li><a href="/postList?page=1">1&nbsp;&nbsp;&nbsp;</a></li>
