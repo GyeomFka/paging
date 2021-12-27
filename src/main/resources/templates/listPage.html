@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Paging Page</title>
+    <style>
+      * {border: 1px dotted red;}
+      table { border-collapse : collapse; width : 100%; }
+      th, td { border: solid 1px #000; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <table>
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>생성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="postList : ${postList}">
+            <td th:text="${postList.id}"></td>
+            <td th:text="${postList.title}"></td>
+            <td th:text="${postList.createTime}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div> <!--container-->
+
+<nav style="text-aling: center;">
+    <p th:text="${pagingConfigure}"></p>
+    <ul>
+        <li><a href="/postList?page=1">1</a></li>
+        <li><a href="/postList?page=2">2</a></li>
+        <li><a href="/postList?page=3">3</a></li>
+        <li><a href="/postList?page=4">4</a></li>
+        <li><a href="/postList?page=5">5</a></li>
+        <li><a href="/postList?page=6">6</a></li>
+        <li><a href="/postList?page=7">7</a></li>
+    </ul>
+</nav>
+
+</body>
+</html>
