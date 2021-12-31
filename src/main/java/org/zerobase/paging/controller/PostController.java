@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.zerobase.paging.domain.Posts;
+import org.zerobase.paging.pageable.Pageble;
 import org.zerobase.paging.pageable.Paging;
 import org.zerobase.paging.service.PagingService;
 import org.zerobase.paging.service.PostService;
@@ -32,8 +33,10 @@ public class PostController {
     }
     
     //http://localhost:8080/postList?page=page
-    @GetMapping("/postList")
+    /*@GetMapping("/postList")
     public String listPage(Model model, @RequestParam("page") Optional<Integer> page) {
+
+        System.out.println("이거냐?");
 
         int nowPage = page.orElse(1);
         System.out.println("nowPage = " + nowPage);
@@ -43,6 +46,24 @@ public class PostController {
 
         model.addAttribute("postList", postList);
         model.addAttribute("pagingConfigure", paging);
+
+        return "listPage";
+    }*/
+
+    @GetMapping("/postList")
+    public String listPage(Model model, @RequestParam(value = "page", defaultValue = "1") int nowPage) {
+
+        int count = listService.count();
+        int postNum = 10;
+        int pageNum = (int)Math.ceil((double)count/postNum);
+        int displayPost = (nowPage-1) * postNum;
+
+        List<Posts> postList = listService.getPostList(displayPost, postNum);
+        Pageble pageble = new Pageble(nowPage);
+
+
+        model.addAttribute("postList", postList);
+        model.addAttribute("pageble", pageble);
 
         return "listPage";
     }

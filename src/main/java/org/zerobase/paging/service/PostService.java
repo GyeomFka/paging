@@ -22,8 +22,20 @@ public class PostService {
         postRepository.initialSetting();
     }
 
+    public int count() {
+        return postRepository.count();
+    }
+
+    public List<Posts> getAllList() {
+        return postRepository.findAll();
+    }
+
     public List<Posts> getPostList(Paging paging) {
         return postRepository.findInBound(paging);
+    }
+
+    public List<Posts> getPostList(int viewStartNumber, int postCount) {
+        return postRepository.findInBound(viewStartNumber, postCount);
     }
 
 }
